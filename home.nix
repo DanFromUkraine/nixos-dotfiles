@@ -14,7 +14,7 @@
     zip
     gemini-cli
     iftop
-    
+    telegram-desktop
   ];
 
   programs = {
