@@ -34,5 +34,18 @@
     };
 
     home-manager.enable = true;
+
+    ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      
+      matchBlocks = {
+        "github.com" = {
+          host = "github.com";
+          user = "git";
+          identityFile = "/home/linkava/nixos-config/secrets/github_key";
+        };
+      };
+    };
   }; 
 }
