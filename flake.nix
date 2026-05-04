@@ -9,7 +9,7 @@
 
   outputs = { nixpkgs, home-manager, ... }@inputs: 
   let
-    powerProfile = "eco"; # performance or eco 
+    powerProfile = "performance"; # performance or eco 
   in {
       nixosConfigurations.linkava = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs powerProfile; }; 

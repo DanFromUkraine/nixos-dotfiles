@@ -22,7 +22,8 @@
     LC_TIME = "nl_NL.UTF-8";
   };
   services.xserver.xkb = {
-    layout = "us";
+    layout = "us,ua";
     variant = "";
+    options = "grp:alt_shift_toggle";
   };
 }
