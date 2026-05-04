@@ -52,7 +52,7 @@
         "github.com" = {
           host = "github.com";
           user = "git";
-          identityFile = "/home/linkava/nixos-config/secrets/github_key";
+          identityFile = "/home/linkava/nixos-config/src/secrets/github_key";
         };
       };
     };
