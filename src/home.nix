@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, powerProfile, ... }:
 
 {
   home = {
@@ -6,7 +6,7 @@
     homeDirectory = "/home/linkava";
     stateVersion = "25.11";
   };
-  
+
   home.packages = with pkgs; [
     btop
     glow
@@ -22,6 +22,7 @@
     viber
     helix
     nixd
+    powertop
   ];
 
   programs = {

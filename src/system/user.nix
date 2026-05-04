@@ -5,7 +5,6 @@
     description = "Danylo";
     extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
     packages = with pkgs; [
-      asusctl      
     ];
   };
 

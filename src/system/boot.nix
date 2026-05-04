@@ -18,7 +18,10 @@ in
 
   boot.kernelPackages = pkgs.linuxPackagesFor optimizedKernel;
   
-  boot.kernelParams = [ "amd_pstate=active" ];
+  boot.kernelParams = [ 
+    "amd_pstate=active" 
+    "amdgpu.abmlevel=${if powerProfile == "eco" then "4" else "0"}"
+  ];
 
   services.scx.enable = true;
   
@@ -28,5 +31,5 @@ in
 
   services.scx.extraArgs = if powerProfile == "performance" 
     then [ "--autopower" ] 
-    else[ "--powersave" ];
+    else [ "-m" "powersave" ];
 }
