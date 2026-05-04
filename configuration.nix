@@ -47,9 +47,6 @@
     layout = "us";
     variant = "";
   };
-
-  programs.firefox.enable = true;
-
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -70,12 +67,7 @@
     ];
   };
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-    
-  environment.systemPackages = with pkgs; [
-    helix
-    nixd
-  ];
 
-
-  system.stateVersion = "25.11"; 
+  system.stateVersion = "25.11";
+  nixpkgs.config.allowUnfree = true;
 }

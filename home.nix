@@ -15,6 +15,13 @@
     gemini-cli
     iftop
     telegram-desktop
+    vscode
+    anki-bin
+    chromium
+    jetbrains.webstorm
+    viber
+    helix
+    nixd
   ];
 
   programs = {
@@ -25,6 +32,8 @@
         user.email = "ovsannikovdana91@gmail.com";
       };
     };
+
+    firefox.enable = true;
     
     nh = {
       enable = true;
