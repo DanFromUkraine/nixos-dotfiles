@@ -14,6 +14,11 @@
       nixpkgs.config.allowUnfree = true;
       hardware.bluetooth.enable = true;
 
+      services.asusd = {
+        enable = true;
+        enableUserService = true;
+      };
+
       # Network
       networking.hostName = "linkava";       
       networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -37,6 +42,7 @@
         pulse.enable = true;
       };
 
+
       # Optimizations
 
       zramSwap = {
@@ -48,6 +54,11 @@
       hardware.graphics = {
         enable = true;
         enable32Bit = true;
+      };
+
+      environmentenvironment.sessionVariables = lib.mkIf isGame {
+        RADV_TEX_ANISO = "16";
+        KWIN_DRM_NO_AMS = "1";
       };
 }
 

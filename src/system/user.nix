@@ -2,7 +2,7 @@
     users.users.linkava = {
     isNormalUser = true;
     description = "Danylo";
-    extraGroups = [ "networkmanager" "wheel" "audio" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" "video" "gamemode" ];
     packages = with pkgs; [
     ];
   };

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, powerProfile, ... }:
+{ config, pkgs, lib, powerProfile, isGame, ... }:
 
 let
   customKernel = pkgs.linux_latest.override {
@@ -17,10 +17,18 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackagesFor optimizedKernel;
-  
+
+  boot.kernel.sysctl = {
+    "vm.max_map_count" = 2147483642;
+  };
+
   boot.kernelParams = [ 
     "amd_pstate=active" 
     "amdgpu.abmlevel=${if powerProfile == "eco" then "4" else "0"}"
+  ] ++ lib.optionals isGame [
+    "amdgpu.dcdebugmask=0x600"
+    "amdgpu.ttm_pages_limit=2097152"
+    "ttm.pages_limit=2097152"
   ];
 
   services.scx.enable = true;

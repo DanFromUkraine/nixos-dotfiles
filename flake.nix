@@ -10,9 +10,10 @@
   outputs = { nixpkgs, home-manager, ... }@inputs: 
   let
     powerProfile = "performance"; # performance or eco 
+    isGame = true;
   in {
       nixosConfigurations.linkava = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs powerProfile; }; 
+        specialArgs = { inherit inputs powerProfile isGame; }; 
         
         modules = [
           ./src/configuration.nix
@@ -21,7 +22,7 @@
           {
            home-manager.useGlobalPkgs = true;
            home-manager.useUserPackages = true;
-           home-manager.extraSpecialArgs = { inherit powerProfile; };
+           home-manager.extraSpecialArgs = { inherit powerProfile isGame; };
            home-manager.users.linkava = import ./src/home.nix; 
           }
         ];
