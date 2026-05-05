@@ -8,8 +8,6 @@
       ./system/boot.nix
     ];
 
-  config = lib.mkMerge [
-    {
       # Other
       system.stateVersion = "25.11";
       nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -38,19 +36,19 @@
         alsa.support32Bit = true;
         pulse.enable = true;
       };
-    }
 
-    (lib.mkIf (powerProfile == "eco") {
-      powerManagement.powertop.enable = true;
-      powerManagement.powertop.postStart = ''
-        ${pkgs.systemd}/bin/udevadm trigger -c bind -s usb -a idVendor=2717 -a idProduct=5013
-      '';
+      # Optimizations
 
-      services.udev.extraRules = ''
-        ACTION=="add|bind", SUBSYSTEM=="usb", ATTR{idVendor}=="2717", ATTR{idProduct}=="5013", ATTR{power/control}="on"
-      '';
-    })
-  ];
+      zramSwap = {
+        enable = true;
+        priority = 90;
+        algorithm = "zstd";
+      };
+
+      hardware.graphics = {
+        enable = true;
+        enable32Bit = true;
+      };
 }
 
 
