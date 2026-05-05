@@ -36,5 +36,5 @@
     };
 
     gamemode.enable = if (powerProfile == "performance") then true else false;
-  }
+  };
 }
