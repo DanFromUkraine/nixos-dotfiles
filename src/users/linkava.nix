@@ -28,15 +28,15 @@
     pnpm
     lsd
     arduino-ide
-    gpu-screen-recorder
-    gpu-screen-recorder-gtk
     zed-editor
-    pass
-    gnupg
-    fuzzel
-    wtype
     nixfmt
+    keepassxc
+    cliphist
+    wl-clipboard
+    fuzzel
   ];
+
+  services.cliphist.enable = true;
 
   programs = {
 
@@ -95,5 +95,27 @@
     };
 
     home-manager.enable = true;
+
+    fuzzel = {
+      enable = true;
+      settings = {
+        main = {
+          prompt = "📋 ";
+          lines = 10;
+          width = 40;
+          horizontal-pad = 20;
+          vertical-pad = 20;
+        };
+        border.radius = 12;
+        colors = {
+          background = "1e1e2eff";
+          text = "cdd6f4ff";
+          match = "89b4faff";
+          selection = "313244ff";
+          selection-text = "cdd6f4ff";
+          border = "89b4faff";
+        };
+      };
+    };
   };
 }
