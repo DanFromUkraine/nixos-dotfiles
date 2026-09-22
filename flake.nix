@@ -5,27 +5,32 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: 
-  let
-    powerProfile = "performance"; # performance or eco 
-    isGame = true;
-  in {
+  outputs =
+    { nixpkgs, home-manager, ... }@inputs:
+    let
+      powerProfile = "performance"; # performance or eco
+      isGame = true;
+    in
+    {
       nixosConfigurations.linkava = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs powerProfile isGame; }; 
-        
+        specialArgs = { inherit inputs powerProfile isGame; };
+
         modules = [
-          ./src/configuration.nix
+          ./src/system/index.nix
 
           home-manager.nixosModules.home-manager
           {
-           home-manager.useGlobalPkgs = true;
-           home-manager.useUserPackages = true;
-           home-manager.extraSpecialArgs = { inherit powerProfile isGame; };
-           home-manager.users.linkava = import ./src/home.nix; 
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit powerProfile isGame; };
+            home-manager.users.linkava = import ./src/linkava.nix;
           }
+
+          inputs.nixos-hardware.nixosModules.asus-battery
         ];
       };
-  };
+    };
 }
