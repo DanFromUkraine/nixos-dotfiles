@@ -28,17 +28,28 @@
     pnpm
     lsd
     arduino-ide
-    zed-editor
     nixfmt
-    keepassxc
     cliphist
     wl-clipboard
     fuzzel
+    wtype
+    rofi
+    rofi-rbw
   ];
 
-  services.cliphist.enable = true;
+  services = {
+    cliphist.enable = true;
+  };
+
 
   programs = {
+    rbw = {
+      enable = true;
+      settings = {
+        email = "const.time.flow@gmail.com";
+        pinentry = pkgs.pinentry-gnome3;
+      };
+    };
 
     vscode = {
       enable = true;
