@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }: # <-- Додано config
 
 {
   home = {
@@ -51,7 +51,7 @@
         ]
       );
 
-      extensions = with pkgs.vscode-extensions; [
+      profiles.default.extensions = with pkgs.vscode-extensions; [
         esbenp.prettier-vscode
         platformio.platformio-vscode-ide
         jnoortheen.nix-ide
@@ -67,7 +67,10 @@
       };
     };
 
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
+    };
 
     nh = {
       enable = true;
@@ -78,20 +81,23 @@
 
     ssh = {
       enable = true;
+      enableDefaultConfig = false;
 
-      extraConfig = ''
-        Host gitlab.com
-          HostName gitlab.com
-          User git
-          IdentityFile ~/nixos-config/src/secrets/gitlab/gitlab
-          IdentitiesOnly yes
+      settings = {
+        "gitlab.com" = {
+          hostName = "gitlab.com";
+          user = "git";
+          identityFile = "~/nixos-config/src/secrets/gitlab/gitlab";
+          identitiesOnly = true;
+        };
 
-        Host github.com
-          HostName github.com
-          User git
-          IdentityFile ~/nixos-config/src/secrets/github/github
-          IdentitiesOnly yes
-      '';
+        "github.com" = {
+          hostName = "github.com";
+          user = "git";
+          identityFile = "~/nixos-config/src/secrets/github/github";
+          identitiesOnly = true;
+        };
+      };
     };
 
     home-manager.enable = true;

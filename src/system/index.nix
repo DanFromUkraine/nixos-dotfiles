@@ -31,7 +31,6 @@
   virtualisation.docker.enable = true;
 
   hardware = {
-    pulseaudio.enable = false;
     bluetooth.enable = true;
     asus.battery.chargeUpto = 70;
   };

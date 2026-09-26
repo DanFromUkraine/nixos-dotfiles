@@ -5,6 +5,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  pulseaudio.enable = false;
 
   desktopManager.cosmic.enable = true;
 
