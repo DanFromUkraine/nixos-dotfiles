@@ -35,6 +35,9 @@
     wtype
     rofi
     rofi-rbw
+    localsend
+    gh
+    affine
   ];
 
   services = {
