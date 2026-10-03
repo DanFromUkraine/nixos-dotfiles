@@ -10,6 +10,7 @@
       "gamemode"
       "dialout"
       "docker"
+      "podman"
     ];
   };
 }

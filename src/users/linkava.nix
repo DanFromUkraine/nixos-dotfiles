@@ -38,6 +38,9 @@
     localsend
     gh
     affine
+    qbittorrent
+    vlc
+    podman-compose
   ];
 
   services = {
@@ -121,12 +124,12 @@
       settings = {
         main = {
           prompt = "📋 ";
-          lines = 10;
+          lines = 15;
           width = 40;
-          horizontal-pad = 20;
-          vertical-pad = 20;
+          horizontal-pad = 15;
+          vertical-pad = 15;
         };
-        border.radius = 12;
+        border.radius = 15;
         colors = {
           background = "1e1e2eff";
           text = "cdd6f4ff";

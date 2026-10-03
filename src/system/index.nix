@@ -28,7 +28,13 @@
   ];
   nixpkgs.config.allowUnfree = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    docker.enable = true;
+    podman = {
+      enable = true; 
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
 
   hardware = {
     bluetooth.enable = true;
