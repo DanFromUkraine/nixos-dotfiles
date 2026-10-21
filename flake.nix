@@ -41,7 +41,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs powerProfile isGame; };
-            home-manager.users.linkava = import ./src/users/linkava.nix;
+            home-manager.users.linkava = import ./src/users/linkava/index.nix;
           }
 
           inputs.nixos-hardware.nixosModules.asus-battery
