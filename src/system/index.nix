@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   powerProfile,
   isGame,
   inputs,
@@ -11,13 +9,14 @@
 {
   imports = [
     ./hardware-configuration.nix
+    inputs.noctalia.nixosModules.default
   ];
   system.stateVersion = "25.11";
 
-  users.users = import ./users.nix;
+  users.users = import ./users.nix { inherit pkgs; };
   boot = import ./boot.nix { inherit pkgs; };
   services = import ./services.nix { inherit powerProfile; };
-  programs = import ./sys-programs.nix { inherit isGame; };
+  programs = import ./sys-programs.nix { inherit isGame pkgs; };
 
   time.timeZone = "Europe/Amsterdam";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -28,12 +27,10 @@
   ];
   nixpkgs.config.allowUnfree = true;
 
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   virtualisation = {
     docker.enable = true;
-    podman = {
-      enable = true; 
-      defaultNetwork.settings.dns_enabled = true;
-    };
   };
 
   hardware = {
@@ -44,7 +41,10 @@
   networking = {
     hostName = "linkava";
     proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      wifi.powersave = powerProfile == "eco";
+    };
   };
 
   zramSwap = {
@@ -56,6 +56,4 @@
   security = {
     rtkit.enable = true;
   };
-
-  environment.sessionVariables.COSMIC_DATA_CONTROL_ENABLED = "1";
 }

@@ -1,4 +1,4 @@
-{
+{ pkgs }: {
   linkava = {
     isNormalUser = true;
     description = "Linkava";
@@ -10,7 +10,8 @@
       "gamemode"
       "dialout"
       "docker"
-      "podman"
+      "wireshark"
     ];
+    shell = pkgs.zsh;
   };
 }

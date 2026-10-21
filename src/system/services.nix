@@ -7,17 +7,27 @@
   };
   pulseaudio.enable = false;
 
-  desktopManager.cosmic.enable = true;
-
   displayManager = {
-    cosmic-greeter.enable = true;
-    autoLogin = {
-      enable = false;
-      user = "linkava";
+    noctalia-greeter = {
+      enable = true;
+      settings = {
+        session.default = "niri";
+        user.default = "linkava";
+        appearance.scheme = "Noctalia";
+        keyboard.layout = "us";
+        clock.enabled = true;
+      };
     };
+    defaultSession = "niri";
   };
 
-  flatpak.enable = true;
+  tor = {
+    enable = true;
+    enableGeoIP = true;
+
+    client.enable = true;
+  };
+
   system76-scheduler.enable = true;
 
   scx.enable = true;
