@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, powerProfile, ... }: {
   programs.noctalia = {
     enable = true;
 
@@ -7,6 +7,12 @@
         mode = "dark";
         source = "builtin";
         builtin = "Catppuccin";
+      };
+
+      outputs."eDP-1".mode = {
+        width = 2880;
+        height = 1800;
+        refresh = if powerProfile == "eco" then 60.001 else 120.0;
       };
 
       bar.main = {
@@ -84,7 +90,14 @@
           "start"
           "focused"
         ];
-
+        "Mod+Ctrl+R".spawn = [
+          "noctalia"
+          "msg"
+          "plugin"
+          "noctalia/screen_recorder:service"
+          "all"
+          "stop"
+        ];
         "Mod+Shift+R".spawn = [
           "noctalia"
           "msg"
@@ -108,4 +121,25 @@
     };
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-termfilechooser
+    ];
+  };
+
+  xdg.portal.config.common = {
+    "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
+  };
+
+  home.sessionVariables.TERMCMD = "ghostty --class=org.local.filechooser -e";
+
+  xdg.configFile."xdg-desktop-portal-termfilechooser/config" = {
+    force = true;
+    text = ''
+      [filechooser]
+      cmd=${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
+    '';
+  };
 }

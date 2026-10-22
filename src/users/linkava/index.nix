@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   config,
+  lib,
   ...
 }:
 
@@ -41,6 +42,7 @@ let
     btop
     zathura
     kdePackages.dolphin
+    wiremix
   ];
 
   flakes = [
@@ -84,7 +86,7 @@ in
   };
 
   programs = {
-    nixvim = import ./programs/nvim.nix { inherit config pkgs; };
+    nixvim = import ./programs/nvim.nix { inherit config pkgs lib; };
     vscode = import ./programs/vscode.nix { inherit pkgs; };
     ssh = import ./programs/ssh.nix;
     zsh = import ./programs/zsh.nix;
@@ -135,6 +137,10 @@ in
       };
 
       flake = "/home/linkava/nixos-config";
+    };
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
     };
 
     home-manager.enable = true;

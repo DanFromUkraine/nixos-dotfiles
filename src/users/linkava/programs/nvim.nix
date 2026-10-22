@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   enable = true;
 
   defaultEditor = true;
@@ -9,8 +9,8 @@
     relativenumber = true;
     signcolumn = "yes:1";
     wrap = true;
-    linebreak = true; 
-    breakindent = true; 
+    linebreak = true;
+    breakindent = true;
   };
 
   keymaps = [
@@ -121,7 +121,26 @@
       };
     };
   };
+  extraPlugins = [
+    (pkgs.vimUtils.buildVimPlugin {
+      pname = "nvim-dev-container";
+      version = "unstable-2026-05-12";
 
+      src = pkgs.fetchFromGitHub {
+        owner = "esensar";
+        repo = "nvim-dev-container";
+        rev = "365b4c815339d42133829006dce3e5f8b182b771";
+        hash = "sha256-O9smm0n3ha1MzRHUrVOmsAcOjqoM+CyLF/BKsjFoY54=";
+      };
+    })
+  ];
+
+  extraConfigLua = ''
+    require("devcontainer").setup({
+      container_runtime = "docker",
+      nvim_install_as_root = true,
+    })
+  '';
   userCommands.Nt = {
     command = "Neotree <args>";
     nargs = "*";
