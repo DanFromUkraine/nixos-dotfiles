@@ -1,4 +1,4 @@
-{ }: {
+{ ... }: {
   programs.noctalia = {
     enable = true;
 
@@ -74,6 +74,25 @@
           "noctalia"
           "msg"
           "screenshot-fullscreen"
+        ];
+        "Mod+Alt+R".spawn = [
+          "noctalia"
+          "msg"
+          "plugin"
+          "noctalia/screen_recorder:service"
+          "all"
+          "start"
+          "focused"
+        ];
+
+        "Mod+Shift+R".spawn = [
+          "noctalia"
+          "msg"
+          "plugin"
+          "noctalia/screen_recorder:service"
+          "all"
+          "start"
+          "region"
         ];
         "Mod+D".spawn = [
           "noctalia"

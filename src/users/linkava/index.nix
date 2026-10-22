@@ -86,6 +86,8 @@ in
   programs = {
     nixvim = import ./programs/nvim.nix { inherit config pkgs; };
     vscode = import ./programs/vscode.nix { inherit pkgs; };
+    ssh = import ./programs/ssh.nix;
+    zsh = import ./programs/zsh.nix;
 
     yazi = {
       enable = true;
@@ -109,7 +111,6 @@ in
         cursor-style = "bar";
       };
     };
-
 
     git = {
       enable = true;
@@ -135,9 +136,6 @@ in
 
       flake = "/home/linkava/nixos-config";
     };
-
-    ssh = import ./programs/ssh.nix;
-    zsh = import ./programs/zsh.nix;
 
     home-manager.enable = true;
   };

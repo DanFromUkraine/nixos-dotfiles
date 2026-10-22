@@ -1,4 +1,4 @@
-{ config, pkgs }: {
+{ config, pkgs, ... }: {
   enable = true;
 
   defaultEditor = true;
@@ -8,6 +8,9 @@
     number = true;
     relativenumber = true;
     signcolumn = "yes:1";
+    wrap = true;
+    linebreak = true; 
+    breakindent = true; 
   };
 
   keymaps = [
