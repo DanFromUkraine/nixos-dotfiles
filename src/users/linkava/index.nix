@@ -33,6 +33,8 @@ let
   ];
 
   systemTools = with pkgs; [
+    brightnessctl
+    playerctl
     cliphist
     wl-clipboard
     wtype
@@ -57,6 +59,7 @@ in
   ++ flakes;
 
   xdg.configFile."niri/config.kdl".force = true;
+  home.file."${config.programs.pi-coding-agent.configDir}/settings.json".force = true;
 
   home = {
     username = "linkava";
@@ -90,6 +93,7 @@ in
     vscode = import ./programs/vscode.nix { inherit pkgs; };
     ssh = import ./programs/ssh.nix;
     zsh = import ./programs/zsh.nix;
+    pi-coding-agent = import ./programs/pi.nix { inherit pkgs; };
 
     yazi = {
       enable = true;

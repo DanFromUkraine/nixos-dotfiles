@@ -26,7 +26,7 @@
   outputs =
     { nixpkgs, home-manager, ... }@inputs:
     let
-      powerProfile = "performance"; # performance or eco
+      powerProfile = "eco"; # performance or eco
       isGame = true;
     in
     {

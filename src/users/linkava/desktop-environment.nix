@@ -113,6 +113,12 @@
           "panel-toggle"
           "raycursive/niri-displays:panel"
         ];
+        "Mod+Shift+L".spawn = [
+          "noctalia"
+          "msg"
+          "session"
+          "lock"
+        ];
       };
       input.keyboard.xkb = {
         layout = "us,ua";

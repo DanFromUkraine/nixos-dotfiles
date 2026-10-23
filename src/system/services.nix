@@ -1,4 +1,8 @@
-{ powerProfile }: {
+{ powerProfile, pkgs }: {
+  # Installs 90-brightnessctl.rules: makes /sys/class/backlight/*/brightness
+  # group-writable for the "video" group, so non-root brightness changes work.
+  udev.packages = [ pkgs.brightnessctl ];
+
   pipewire = {
     enable = true;
     alsa.enable = true;
@@ -19,6 +23,10 @@
       };
     };
     defaultSession = "niri";
+  };
+
+  clamav = {
+    updater.enable = true;
   };
 
   tor = {

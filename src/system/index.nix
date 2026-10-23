@@ -15,7 +15,7 @@
 
   users.users = import ./users.nix { inherit pkgs; };
   boot = import ./boot.nix { inherit pkgs; };
-  services = import ./services.nix { inherit powerProfile; };
+  services = import ./services.nix { inherit powerProfile pkgs; };
   programs = import ./sys-programs.nix { inherit isGame pkgs; };
 
   time.timeZone = "Europe/Amsterdam";
