@@ -10,6 +10,8 @@
     packages = [
       "npm:pi-web-access@0.44.0"
       "npm:@forecastx/deep-research@0.1.1"
+      "npm:@gotgenes/pi-permission-system@41.0.0"
+      "npm:pi-powerline-footer@0.20.2"
     ];
   };
 

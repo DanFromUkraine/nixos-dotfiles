@@ -60,6 +60,8 @@ in
 
   xdg.configFile."niri/config.kdl".force = true;
   home.file."${config.programs.pi-coding-agent.configDir}/settings.json".force = true;
+  home.file."${config.programs.pi-coding-agent.configDir}/extensions/pi-permission-system/config.json".source =
+    ./programs/pi-permissions.json;
 
   home = {
     username = "linkava";
