@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -31,23 +32,129 @@ let
     autoDetectVisionModel = false;
   };
 
-  permissionConfig = {
-    permission = {
-      "*" = "allow";
-      path = {
-        "*" = "allow";
-        "*.env" = "deny";
-        "*.env.*" = "deny";
-        "*.env.example" = "allow";
-      };
-      bash = {
-        "*" = "ask";
-        "rm -rf *" = "deny";
-        "sudo *" = "ask";
-      };
-      external_directory = "ask";
-    };
-  };
+  ruleMap =
+    pairs:
+    "{\n"
+    + lib.concatStringsSep ",\n" (
+      map (p: "    ${builtins.toJSON (builtins.elemAt p 0)}: ${builtins.toJSON (builtins.elemAt p 1)}") pairs
+    )
+    + "\n  }";
+
+  pathRules = [
+    [ "*" "allow" ]
+    [ "*.env" "deny" ]
+    [ "*.env.*" "deny" ]
+    [ "*.env.example" "allow" ]
+  ];
+
+  bashRules = [
+    [ "*" "allow" ]
+    [ "sudo *" "ask" ]
+    [ "doas *" "ask" ]
+    [ "pkexec *" "ask" ]
+    [ "su *" "deny" ]
+
+    [ "rm *" "deny" ]
+    [ "rmdir *" "deny" ]
+    [ "unlink *" "deny" ]
+    [ "shred *" "deny" ]
+    [ "truncate *" "deny" ]
+
+    [ "dd *" "deny" ]
+    [ "mkfs*" "deny" ]
+    [ "fdisk *" "deny" ]
+    [ "parted *" "deny" ]
+    [ "wipefs *" "deny" ]
+    [ "blkdiscard *" "deny" ]
+    [ "mount *" "deny" ]
+    [ "umount *" "deny" ]
+    [ "swapoff *" "deny" ]
+
+    [ "chown *" "deny" ]
+    [ "chgrp *" "deny" ]
+    [ "chmod *" "deny" ]
+    [ "chattr *" "deny" ]
+    [ "setfacl *" "deny" ]
+
+    [ "git reset --hard*" "deny" ]
+    [ "git clean *" "deny" ]
+    [ "git push --force*" "deny" ]
+    [ "git push -f*" "deny" ]
+    [ "git branch -D*" "deny" ]
+    [ "git checkout -- *" "deny" ]
+    [ "git restore *" "deny" ]
+    [ "git stash drop*" "deny" ]
+    [ "git stash clear*" "deny" ]
+    [ "git filter-branch*" "deny" ]
+    [ "git reflog expire*" "deny" ]
+
+    [ "nix-collect-garbage *" "deny" ]
+    [ "nix store delete*" "deny" ]
+    [ "nix store gc*" "deny" ]
+    [ "nix profile remove*" "deny" ]
+    [ "nix-env -e*" "deny" ]
+
+    [ "reboot*" "deny" ]
+    [ "poweroff*" "deny" ]
+    [ "halt*" "deny" ]
+    [ "shutdown *" "deny" ]
+
+    [ "passwd*" "deny" ]
+    [ "userdel *" "deny" ]
+    [ "groupdel *" "deny" ]
+    [ "crontab -r*" "deny" ]
+    [ "history -c*" "deny" ]
+
+    [ "killall *" "deny" ]
+    [ "kill *" "ask" ]
+    [ "pkill *" "ask" ]
+    [ "systemctl poweroff*" "deny" ]
+    [ "systemctl reboot*" "deny" ]
+
+    [ "mv *" "ask" ]
+    [ "cp *" "ask" ]
+    [ "tee *" "ask" ]
+
+    [ "find *" "allow" ]
+    [ "find * -delete*" "deny" ]
+    [ "find * -fprint*" "deny" ]
+    [ "find * -fls*" "deny" ]
+    [ "find * -exec*" "ask" ]
+    [ "find * -ok*" "ask" ]
+
+    [ "sed *" "ask" ]
+    [ "sed -n '*p' *" "allow" ]  
+    [ "sed -n \"*p\" *" "allow" ]
+    [ "sed -n '*p'" "allow" ]   
+    [ "sed -n \"*p\"" "allow" ]
+    [ "sed '*p' *" "allow" ]   
+    [ "sed \"*p\" *" "allow" ]
+    [ "sed 's/*' *" "allow" ] 
+    [ "sed \"s/*\" *" "allow" ]
+    [ "sed -E 's/*' *" "allow" ]
+    [ "sed -e 's/*' *" "allow" ]
+
+    [ "awk *" "ask" ]
+    [ "awk '{print*}' *" "allow" ]
+    [ "awk \"{print*}\" *" "allow" ]
+    [ "awk -F* '{print*}' *" "allow" ]
+    [ "awk -F * '{print*}' *" "allow" ]
+
+    [ "sort *" "ask" ]
+    [ "fd *" "ask" ]
+  ];
+
+  permissionJson = ''
+    {
+      "permission": {
+        "*": "allow",
+        "path": ${ruleMap pathRules},
+        "bash": ${ruleMap bashRules},
+        "external_directory": "ask",
+        "external_directory_read": { "*": "allow" }
+      }
+    }
+  '';
 in
 {
   programs.pi-coding-agent = {
@@ -119,7 +226,9 @@ in
       force = true;
     };
 
-    "${cfg.configDir}/extensions/pi-permission-system/config.json".source =
-      jsonFormat.generate "pi-permissions.json" permissionConfig;
+    "${cfg.configDir}/extensions/pi-permission-system/config.json" = {
+      text = permissionJson;
+      force = true;
+    };
   };
 }
