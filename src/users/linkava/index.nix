@@ -55,13 +55,11 @@ in
 {
   imports = [
     ./desktop-environment.nix
+    ./programs/pi.nix
   ]
   ++ flakes;
 
   xdg.configFile."niri/config.kdl".force = true;
-  home.file."${config.programs.pi-coding-agent.configDir}/settings.json".force = true;
-  home.file."${config.programs.pi-coding-agent.configDir}/extensions/pi-permission-system/config.json".source =
-    ./programs/pi-permissions.json;
 
   home = {
     username = "linkava";
@@ -95,7 +93,6 @@ in
     vscode = import ./programs/vscode.nix { inherit pkgs; };
     ssh = import ./programs/ssh.nix;
     zsh = import ./programs/zsh.nix;
-    pi-coding-agent = import ./programs/pi.nix { inherit pkgs; };
 
     yazi = {
       enable = true;
