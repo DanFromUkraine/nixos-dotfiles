@@ -1,6 +1,12 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
   enable = true;
-
+  nixpkgs.source = inputs.nixpkgs;
   defaultEditor = true;
   colorschemes.catppuccin.enable = true;
 

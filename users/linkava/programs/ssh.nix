@@ -6,14 +6,14 @@
     "gitlab.com" = {
       hostName = "gitlab.com";
       user = "git";
-      identityFile = "~/nixos-config/src/secrets/gitlab/gitlab";
+      identityFile = "~/nixos-config/secrets/gitlab/gitlab";
       identitiesOnly = true;
     };
 
     "github.com" = {
       hostName = "github.com";
       user = "git";
-      identityFile = "~/nixos-config/src/secrets/github/github";
+      identityFile = "~/nixos-config/secrets/github/github";
       identitiesOnly = true;
     };
   };

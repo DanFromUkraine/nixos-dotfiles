@@ -1,0 +1,9 @@
+[submodule "submodules/vane"]
+	path = submodules/vane
+	url = git@github.com:ItzCrazyKns/Vane.git
+[submodule "submodules/local-deep-research"]
+	path = submodules/local-deep-research
+	url = git@github.com:LearningCircuit/local-deep-research.git
+[submodule "submodules/morphic"]
+	path = submodules/morphic
+	url = git@github.com:miurla/morphic.git

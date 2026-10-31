@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   config,
-  lib,
   ...
 }:
 
@@ -17,7 +16,6 @@ let
     lsd
     arduino-ide
     nixfmt
-    jetbrains-toolbox
     helix
     nixd
     powertop
@@ -30,6 +28,7 @@ let
     clang-tools
     arduino-cli
     iw
+    yarn
   ];
 
   systemTools = with pkgs; [
@@ -56,6 +55,7 @@ in
   imports = [
     ./desktop-environment.nix
     ./programs/pi.nix
+    ./programs/vscode.nix
   ]
   ++ flakes;
 
@@ -89,8 +89,7 @@ in
   };
 
   programs = {
-    nixvim = import ./programs/nvim.nix { inherit config pkgs lib; };
-    vscode = import ./programs/vscode.nix { inherit pkgs; };
+    nixvim = import ./programs/nvim.nix { inherit config pkgs inputs; };
     ssh = import ./programs/ssh.nix;
     zsh = import ./programs/zsh.nix;
 
@@ -112,7 +111,7 @@ in
     ghostty = {
       enable = true;
       settings = {
-        theme = "TokyoNight";
+        theme = "dark:Catppuccin Frappe,light:Catppuccin Latte";
         cursor-style = "bar";
       };
     };

@@ -21,10 +21,17 @@
   time.timeZone = "Europe/Amsterdam";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   systemd.services.NetworkManager-wait-online.enable = false;
@@ -43,7 +50,7 @@
     proxy.noProxy = "127.0.0.1,localhost,internal.domain";
     networkmanager = {
       enable = true;
-      wifi.powersave = powerProfile == "eco";
+      wifi.powersave = false;
     };
   };
 

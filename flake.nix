@@ -14,19 +14,17 @@
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     noctalia = {
       url = "github:noctalia-dev/noctalia/cachix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
     { nixpkgs, home-manager, ... }@inputs:
     let
-      powerProfile = "eco"; # performance or eco
+      powerProfile = "performance"; # performance or eco
       isGame = true;
     in
     {
@@ -34,14 +32,14 @@
         specialArgs = { inherit inputs powerProfile isGame; };
 
         modules = [
-          ./src/system/index.nix
+          ./system/index.nix
 
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs powerProfile isGame; };
-            home-manager.users.linkava = import ./src/users/linkava/index.nix;
+            home-manager.users.linkava = import ./users/linkava/index.nix;
           }
 
           inputs.nixos-hardware.nixosModules.asus-battery

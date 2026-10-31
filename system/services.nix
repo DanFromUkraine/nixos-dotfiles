@@ -1,6 +1,4 @@
 { powerProfile, pkgs }: {
-  # Installs 90-brightnessctl.rules: makes /sys/class/backlight/*/brightness
-  # group-writable for the "video" group, so non-root brightness changes work.
   udev.packages = [ pkgs.brightnessctl ];
 
   pipewire = {
@@ -50,4 +48,22 @@
         "-m"
         "powersave"
       ];
+
+  searx = {
+    enable = true;
+    environmentFile = "/home/linkava/nixos-config/secrets/apis/.searxng.env";
+    settings = {
+      general = {
+        debug = false;
+      };
+      server = {
+        bind_address = "127.0.0.1";
+        port = 2202;
+      };
+      search.formats = [
+        "html"
+        "json"
+      ];
+    };
+  };
 }
