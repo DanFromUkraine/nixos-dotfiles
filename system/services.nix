@@ -1,4 +1,98 @@
-{ powerProfile, pkgs }: {
+{ powerProfile, pkgs }:
+let
+  searxWebEngines = [
+    "bing"
+    "yahoo"
+    "mwmbl"
+    "wiby"
+  ];
+
+  searxSiteEngines = [
+    "gitlab"
+    "codeberg"
+    "gitea.com"
+    "bitbucket"
+    "sourcehut"
+    "huggingface"
+    "huggingface datasets"
+    "huggingface spaces"
+    "mdn"
+    "microsoft learn"
+    "nixos wiki"
+    "free software directory"
+    "mankier"
+    "docker hub"
+    "anaconda"
+    "npm"
+    "pypi"
+    "crates.io"
+    "hex"
+    "lib.rs"
+    "pkg.go.dev"
+    "packagist"
+    "rubygems"
+    "metacpan"
+    "pub.dev"
+    "hoogle"
+    "alpine linux packages"
+    "cachy os packages"
+    "voidlinux"
+    "apk mirror"
+    "fdroid"
+    "apple app store"
+    "google play apps"
+    "arch linux wiki"
+    "gentoo"
+    "national vulnerability database"
+    "hackernews"
+    "lobste.rs"
+    "habrahabr"
+    "stackoverflow"
+    "askubuntu"
+    "superuser"
+    "discuss.python"
+    "caddy.community"
+    "pi-hole.community"
+    "minecraft wiki"
+    "arxiv"
+    "crossref"
+    "openalex"
+    "semantic scholar"
+    "google scholar"
+    "openairepublications"
+    "openairedatasets"
+    "pdbe"
+    "wikipedia"
+    "wikidata"
+    "wikinews"
+    "wiktionary"
+  ];
+
+  searxWikiEngines = [
+    "wikibooks"
+    "wikiquote"
+    "wikisource"
+    "wikispecies"
+    "wikiversity"
+    "wikivoyage"
+  ];
+
+  searxDisabledEngines = [
+    "pubmed"
+    "europepmc"
+  ];
+
+  searxEngineEntry = disabled: name: {
+    inherit name disabled;
+  };
+
+  searxWikiEngineEntry = name: {
+    inherit name;
+    disabled = false;
+    categories = [ "wikimedia" ];
+  };
+in
+{
   udev.packages = [ pkgs.brightnessctl ];
 
   pipewire = {
@@ -60,10 +154,24 @@
         bind_address = "127.0.0.1";
         port = 2202;
       };
-      search.formats = [
-        "html"
-        "json"
-      ];
+      search = {
+        formats = [
+          "html"
+          "json"
+        ];
+        autocomplete = "";
+      };
+      preferences.lock = [ "autocomplete" ];
+      engines =
+        map (searxEngineEntry false) (searxWebEngines ++ searxSiteEngines)
+        ++ map searxWikiEngineEntry searxWikiEngines
+        ++ map (searxEngineEntry true) searxDisabledEngines;
+      outgoing = {
+        proxies."all://" = [ "$SEARX_PROXY" ];
+        request_timeout = 15.0;
+        max_request_timeout = 30.0;
+        extra_proxy_timeout = 12;
+      };
     };
   };
 }

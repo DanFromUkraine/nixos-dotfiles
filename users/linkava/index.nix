@@ -29,6 +29,9 @@ let
     arduino-cli
     iw
     yarn
+    lazydocker
+    bat
+    jq
   ];
 
   systemTools = with pkgs; [
