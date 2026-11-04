@@ -9,6 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./packages.nix
     inputs.noctalia.nixosModules.default
   ];
   system.stateVersion = "25.11";
@@ -38,6 +39,11 @@
 
   virtualisation = {
     docker.enable = true;
+    libvirtd = {
+      enable = true;
+      onShutdown = "shutdown";
+      qemu.swtpm.enable = true;
+    };
   };
 
   hardware = {

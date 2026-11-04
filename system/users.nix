@@ -10,6 +10,7 @@
       "gamemode"
       "dialout"
       "docker"
+      "libvirtd"
       "wireshark"
     ];
     shell = pkgs.zsh;

@@ -6,49 +6,6 @@
 }:
 
 let
-  programmingTools = with pkgs; [
-    podman-compose
-    lazygit
-    gh
-    nodejs
-    codex
-    pnpm
-    lsd
-    arduino-ide
-    nixfmt
-    helix
-    nixd
-    powertop
-    glow
-    zip
-    distrobox
-    platformio
-    nmap
-    yt-dlp
-    clang-tools
-    arduino-cli
-    iw
-    yarn
-    lazydocker
-    bat
-    jq
-  ];
-
-  systemTools = with pkgs; [
-    brightnessctl
-    playerctl
-    cliphist
-    wl-clipboard
-    wtype
-    rofi
-    rofi-rbw
-    gamescope
-    btop
-    zathura
-    kdePackages.dolphin
-    wiremix
-  ];
-
   flakes = [
     inputs.nixvim.homeModules.nixvim
     inputs.noctalia.homeModules.default
@@ -68,27 +25,6 @@ in
     username = "linkava";
     homeDirectory = "/home/linkava";
     stateVersion = "25.11";
-
-    packages =
-      (with pkgs; [
-        anki-bin
-        chromium
-        libreoffice-qt
-        obsidian
-        foliate
-        localsend
-        affine
-        qbittorrent
-        vlc
-        tor-browser
-        inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.freesmlauncher
-      ])
-      ++ programmingTools
-      ++ systemTools;
-  };
-
-  services = {
-    cliphist.enable = true;
   };
 
   programs = {
@@ -100,6 +36,16 @@ in
       enable = true;
       enableZshIntegration = true;
       shellWrapperName = "y";
+      keymap.mgr.prepend_keymap = [
+        {
+          on = [
+            "c"
+            "y"
+          ];
+          run = "shell -- [ -f %h ] && wl-copy < %h || true";
+          desc = "copy contents of the file";
+        }
+      ];
     };
 
     rbw = {

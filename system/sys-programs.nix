@@ -20,4 +20,5 @@
   gamemode.enable = isGame;
   nix-ld.enable = true;
   zsh.enable = true;
+  virt-manager.enable = true;
 }
