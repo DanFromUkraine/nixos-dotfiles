@@ -19,6 +19,11 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia/cachix";
     };
+
+    hide-me = {
+      url = "path:./derivations/hide.me";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

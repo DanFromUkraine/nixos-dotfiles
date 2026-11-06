@@ -62,6 +62,17 @@ in
       settings = {
         theme = "dark:Catppuccin Frappe,light:Catppuccin Latte";
         cursor-style = "bar";
+        keybind = [
+          "ctrl+shift+r=prompt_tab_title"
+          "ctrl+shift+h=new_split:left"
+          "ctrl+shift+j=new_split:down"
+          "ctrl+shift+k=new_split:up"
+          "ctrl+shift+l=new_split:right"
+          "ctrl+alt+key_h=goto_split:left"
+          "ctrl+alt+key_j=goto_split:down"
+          "ctrl+alt+key_k=goto_split:up"
+          "ctrl+alt+key_l=goto_split:right"
+        ];
       };
     };
 

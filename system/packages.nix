@@ -60,6 +60,7 @@ let
     kdePackages.dolphin
     wiremix
     imagemagick
+    hide-me
   ];
 in
 {

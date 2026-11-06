@@ -143,6 +143,11 @@ in
         "powersave"
       ];
 
+  hide-me = {
+    enable = false;
+    server = "free-us";
+  };
+
   searx = {
     enable = true;
     environmentFile = "/home/linkava/nixos-config/secrets/apis/.searxng.env";

@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./packages.nix
     inputs.noctalia.nixosModules.default
+    inputs.hide-me.nixosModules.default
   ];
   system.stateVersion = "25.11";
 
@@ -21,6 +22,8 @@
 
   time.timeZone = "Europe/Amsterdam";
   i18n.defaultLocale = "en_US.UTF-8";
+
+  nixpkgs.overlays = [ inputs.hide-me.overlays.default ];
 
   nix.settings = {
     extra-substituters = [ "https://noctalia.cachix.org" ];
@@ -54,6 +57,7 @@
   networking = {
     hostName = "linkava";
     proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    wireguard.enable = true;
     networkmanager = {
       enable = true;
       wifi.powersave = false;

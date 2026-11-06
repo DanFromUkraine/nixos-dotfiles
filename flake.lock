@@ -43,6 +43,22 @@
         "type": "github"
       }
     },
+    "hide-me": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "path": "./derivations/hide.me",
+        "type": "path"
+      },
+      "original": {
+        "path": "./derivations/hide.me",
+        "type": "path"
+      },
+      "parent": []
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -213,6 +229,7 @@
     "root": {
       "inputs": {
         "freesmlauncher": "freesmlauncher",
+        "hide-me": "hide-me",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
