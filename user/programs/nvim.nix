@@ -13,13 +13,16 @@
   opts = {
     number = true;
     relativenumber = true;
-    signcolumn = "yes:1";
     wrap = true;
     linebreak = true;
     breakindent = true;
+    tabstop = 2;
+    expandtab = true;
+    shiftwidth = 2;
   };
 
   keymaps = [
+
     {
       mode = "n";
       key = "<Space>f";
@@ -61,6 +64,43 @@
       mode = "n";
       key = "[h";
       action = "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>";
+    }
+    # pi-nvim
+    {
+      mode = "n";
+      key = "<Space>pp";
+      action = "<cmd>Pi<CR>";
+      options.desc = "Pi: send dialog (file + prompt)";
+    }
+    {
+      mode = "x";
+      key = "<Space>pa";
+      action = ":'<,'>Pi<CR>";
+      options.desc = "Pi: send dialog for selection";
+    }
+    {
+      mode = "n";
+      key = "<Space>pb";
+      action = "<cmd>PiSendBuffer<CR>";
+      options.desc = "Pi: send whole buffer";
+    }
+    {
+      mode = "n";
+      key = "<Space>pf";
+      action = "<cmd>PiSendFile<CR>";
+      options.desc = "Pi: send file path";
+    }
+    {
+      mode = "n";
+      key = "<Space>pg";
+      action = "<cmd>PiPing<CR>";
+      options.desc = "Pi: ping session";
+    }
+    {
+      mode = "n";
+      key = "<Space>ps";
+      action = "<cmd>PiSessions<CR>";
+      options.desc = "Pi: list sessions";
     }
   ];
 
@@ -129,24 +169,24 @@
   };
   extraPlugins = [
     (pkgs.vimUtils.buildVimPlugin {
-      pname = "nvim-dev-container";
-      version = "unstable-2026-05-12";
+      pname = "pi-nvim";
+      version = "unstable-2026-10-12";
 
       src = pkgs.fetchFromGitHub {
-        owner = "esensar";
-        repo = "nvim-dev-container";
-        rev = "365b4c815339d42133829006dce3e5f8b182b771";
-        hash = "sha256-O9smm0n3ha1MzRHUrVOmsAcOjqoM+CyLF/BKsjFoY54=";
+        owner = "carderne";
+        repo = "pi-nvim";
+        rev = "b10a3cc94583cc232645f0e49533e282a3486c0d";
+        hash = "sha256-+aToqE10rq8mebxMfkf8r+aIrZpE/rdF4xdWol41lV0=";
       };
     })
   ];
 
   extraConfigLua = ''
-    require("devcontainer").setup({
-      container_runtime = "docker",
-      nvim_install_as_root = true,
+    require("pi-nvim").setup({
+      set_default_keymaps = false,
     })
   '';
+
   userCommands.Nt = {
     command = "Neotree <args>";
     nargs = "*";
