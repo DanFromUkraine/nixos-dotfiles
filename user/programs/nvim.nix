@@ -119,7 +119,10 @@
       ];
     };
     bufferline.enable = true;
-    neo-tree.enable = true;
+    neo-tree = {
+      enable = true;
+      settings.filesystem.use_libuv_file_watcher = true;
+    };
     telescope.enable = true;
     treesitter.enable = true;
     blink-cmp.enable = true;
@@ -179,12 +182,24 @@
         hash = "sha256-+aToqE10rq8mebxMfkf8r+aIrZpE/rdF4xdWol41lV0=";
       };
     })
+    (pkgs.vimUtils.buildVimPlugin {
+      pname = "auto-reload";
+      version = "1.0";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "ycdzj";
+        repo = "auto-reload.nvim";
+        rev = "635e63d46bcad9c8dc0b0a8c483209e1f2aae465";
+        hash = "sha256-JKKwi7tFIfF1UbD1F75zcurO6cmZPvxAT9i2nP5rQHo=";
+      };
+    })
   ];
 
   extraConfigLua = ''
     require("pi-nvim").setup({
       set_default_keymaps = false,
     })
+    require('auto-reload').setup()
   '';
 
   userCommands.Nt = {

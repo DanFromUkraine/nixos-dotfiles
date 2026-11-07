@@ -1,4 +1,5 @@
 {
+  # zsh: autosuggestions, syntax highlighting, aliases, oh-my-zsh
   enable = true;
 
   autosuggestion.enable = true;
