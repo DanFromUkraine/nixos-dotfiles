@@ -82,12 +82,6 @@
       options.desc = "CodeCompanion: new chat (OpenCode + markitdown)";
     }
     {
-      mode = "n";
-      key = "<Space>ca";
-      action = "<cmd>CodeCompanionChat adapter=opencode_agent<CR>";
-      options.desc = "CodeCompanion: new chat with the OpenCode agent (ACP)";
-    }
-    {
       mode = [
         "n"
         "v"
