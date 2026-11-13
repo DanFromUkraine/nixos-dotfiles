@@ -14,8 +14,8 @@ in
 {
   imports = [
     ./desktop-environment.nix
-    ./programs/pi.nix
     ./programs/vscode.nix
+    ./programs/opencode.nix
   ]
   ++ flakes;
 

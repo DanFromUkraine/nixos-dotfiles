@@ -18,6 +18,25 @@
       bar.main = {
         position = "left";
       };
+
+      idle = {
+        # Fullscreen fade before the idle action; cancelled by any input.
+        pre_action_fade_seconds = 3.0;
+
+        # 5 min: dim, then show the login screen.
+        behavior.lock = {
+          action = "lock";
+          enabled = true;
+          timeout = 300;
+        };
+
+        # 10 min: lock and suspend.
+        behavior.suspend = {
+          action = "lock_and_suspend";
+          enabled = true;
+          timeout = 600;
+        };
+      };
     };
   };
 
