@@ -17,6 +17,10 @@ let
     vlc
     tor-browser
     inputs.freesmlauncher.packages.${pkgs.stdenv.hostPlatform.system}.freesmlauncher
+    file
+    sqlite
+    ripgrep
+    markitdown
   ];
 
   programmingTools = with pkgs; [
@@ -45,6 +49,7 @@ let
     lazydocker
     bat
     jq
+    nix-prefetch-git
   ];
 
   systemTools = with pkgs; [

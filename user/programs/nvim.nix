@@ -65,42 +65,75 @@
       key = "[h";
       action = "<cmd>lua require('gitsigns').nav_hunk('prev')<CR>";
     }
-    # pi-nvim
+    # codecompanion
     {
-      mode = "n";
-      key = "<Space>pp";
-      action = "<cmd>Pi<CR>";
-      options.desc = "Pi: send dialog (file + prompt)";
-    }
-    {
-      mode = "x";
-      key = "<Space>pa";
-      action = ":'<,'>Pi<CR>";
-      options.desc = "Pi: send dialog for selection";
+      mode = [
+        "n"
+        "v"
+      ];
+      key = "<Space>cc";
+      action = "<cmd>CodeCompanionChat Toggle<CR>";
+      options.desc = "CodeCompanion: toggle chat";
     }
     {
       mode = "n";
-      key = "<Space>pb";
-      action = "<cmd>PiSendBuffer<CR>";
-      options.desc = "Pi: send whole buffer";
+      key = "<Space>cn";
+      action = "<cmd>CodeCompanionChat<CR>";
+      options.desc = "CodeCompanion: new chat (OpenCode + markitdown)";
     }
     {
       mode = "n";
-      key = "<Space>pf";
-      action = "<cmd>PiSendFile<CR>";
-      options.desc = "Pi: send file path";
+      key = "<Space>ca";
+      action = "<cmd>CodeCompanionChat adapter=opencode_agent<CR>";
+      options.desc = "CodeCompanion: new chat with the OpenCode agent (ACP)";
+    }
+    {
+      mode = [
+        "n"
+        "v"
+      ];
+      key = "<Space>cA";
+      action = "<cmd>CodeCompanionActions<CR>";
+      options.desc = "CodeCompanion: actions palette";
+    }
+    {
+      mode = [
+        "n"
+        "v"
+      ];
+      key = "<Space>ci";
+      action = "<cmd>CodeCompanion<CR>";
+      options.desc = "CodeCompanion: inline prompt";
+    }
+    {
+      mode = "v";
+      key = "<Space>cs";
+      action = ":'<,'>CodeCompanion<CR>";
+      options.desc = "CodeCompanion: inline prompt on selection";
+    }
+    {
+      mode = "v";
+      key = "<Space>c+";
+      action = ":'<,'>CodeCompanionChat Add<CR>";
+      options.desc = "CodeCompanion: add selection to chat";
     }
     {
       mode = "n";
-      key = "<Space>pg";
-      action = "<cmd>PiPing<CR>";
-      options.desc = "Pi: ping session";
+      key = "<Space>cf";
+      action = "<cmd>CCFetch<CR>";
+      options.desc = "CodeCompanion: fetch URL/file via markitdown";
     }
     {
       mode = "n";
-      key = "<Space>ps";
-      action = "<cmd>PiSessions<CR>";
-      options.desc = "Pi: list sessions";
+      key = "<Space>cr";
+      action = "<cmd>CodeCompanionCodeReview<CR>";
+      options.desc = "CodeCompanion: code review";
+    }
+    {
+      mode = "n";
+      key = "<Space>cm";
+      action = "<cmd>checkhealth codecompanion<CR>";
+      options.desc = "CodeCompanion: health check";
     }
   ];
 
@@ -129,6 +162,22 @@
     nvim-surround.enable = true;
     mini-bracketed.enable = true;
     gitsigns.enable = true;
+    codecompanion = {
+      enable = true;
+      settings = {
+        interactions = {
+          chat.adapter = "opencode";
+          inline.adapter = "opencode";
+        };
+      };
+    };
+    render-markdown = {
+      enable = true;
+      settings.file_types = [
+        "markdown"
+        "codecompanion"
+      ];
+    };
     mini-basics = {
       enable = true;
       settings = {
@@ -161,7 +210,9 @@
             workspace.semanticTokens = config.lib.nixvim.mkRaw "vim.NIL";
           };
         };
-        clangd.enable = true;
+        clangd = {
+          enable = true;
+        };
 
         nixd = {
           enable = true;
@@ -171,17 +222,6 @@
     };
   };
   extraPlugins = [
-    (pkgs.vimUtils.buildVimPlugin {
-      pname = "pi-nvim";
-      version = "unstable-2026-10-12";
-
-      src = pkgs.fetchFromGitHub {
-        owner = "carderne";
-        repo = "pi-nvim";
-        rev = "b10a3cc94583cc232645f0e49533e282a3486c0d";
-        hash = "sha256-+aToqE10rq8mebxMfkf8r+aIrZpE/rdF4xdWol41lV0=";
-      };
-    })
     (pkgs.vimUtils.buildVimPlugin {
       pname = "auto-reload";
       version = "1.0";
@@ -196,9 +236,6 @@
   ];
 
   extraConfigLua = ''
-    require("pi-nvim").setup({
-      set_default_keymaps = false,
-    })
     require('auto-reload').setup()
   '';
 
