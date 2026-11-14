@@ -50,6 +50,9 @@ let
     bat
     jq
     nix-prefetch-git
+    jetbrains.clion
+    jetbrains.webstorm
+    jetbrains.pycharm
   ];
 
   systemTools = with pkgs; [
@@ -66,6 +69,7 @@ let
     wiremix
     imagemagick
     hide-me
+    scx-loader
   ];
 in
 {

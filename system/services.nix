@@ -130,19 +130,10 @@ in
 
   system76-scheduler.enable = true;
 
-  scx.enable = true;
-
-  scx.scheduler = if powerProfile == "performance" then "scx_lavd" else "scx_bpfland";
-
-  scx.extraArgs =
-    if powerProfile == "performance" then
-      [ "--autopower" ]
-    else
-      [
-        "-m"
-        "powersave"
-      ];
-
+  scx-loader = {
+    enable = true;
+    config.default_sched = "scx_flash";
+  };
   hide-me = {
     enable = false;
     server = "free-us";

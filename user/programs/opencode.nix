@@ -17,8 +17,7 @@ in
       agents.chat = {
         description = "ChatGPT-like chat: no local access, web only";
         mode = "primary";
-        model = "engy/deepseek-v4.1-flash#none";
-        steps = 6;
+        model = "engy/deepseek-v4.1-flash";
 
         system = ''
           You are a general-purpose chat assistant.
